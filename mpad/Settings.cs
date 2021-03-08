@@ -13,7 +13,7 @@ namespace mpad
             public bool wrap;
             public string font;
             public int saveTimer;
-            public float zoom;
+            public float fontSize;
         }
 
         internal static readonly string configPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\mpad";
@@ -27,7 +27,7 @@ namespace mpad
             impConfig.wrap = json.wrap;
             impConfig.font = json.font;
             impConfig.saveTimer = json.saveTimer;
-            impConfig.zoom = json.zoom;
+            impConfig.fontSize = json.fontSize;
         }
 
         internal static void DeserializeConfig()

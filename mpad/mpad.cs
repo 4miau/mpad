@@ -13,12 +13,11 @@ namespace mpad
 {
     public partial class mpadMain : Form
     {
-        private static readonly string EmergencyPath = Settings.configPath + @"\RecoveryFolder";
+        private static readonly string EmergencyPath = Settings.configPath + @"\Recovered Files";
 
         public static int newReturn;
         public static int currentTimer = 30000; //default
-        public static float defaultZoom = 9.25f;
-        public static float newZoom;
+        private static float newZoom = impConfig.fontSize;
         
         public static string Theme = "Light"; //default
 
@@ -41,7 +40,7 @@ namespace mpad
                currentTimer = impConfig.saveTimer;
                txtMain.WordWrap = impConfig.wrap;
                foWrap.Checked = impConfig.wrap;
-               txtMain.Font = new Font(impConfig.font, impConfig.zoom );
+               txtMain.Font = new Font(impConfig.font, impConfig.fontSize );
            })); //Overwrites default
 
             //Config to retrieve:  font, theme
@@ -53,6 +52,7 @@ namespace mpad
         {
             Confirmation closeConfirm = new Confirmation
             {
+                StartPosition = FormStartPosition.CenterParent,
                 Type = 2
             };
 
@@ -138,9 +138,12 @@ namespace mpad
         {
             var newConfirm = new Confirmation
             {
+                StartPosition = FormStartPosition.CenterParent,
                 Type = 1
             };
-
+            
+        
+            
             if (!Data.saved)
             {
                 newConfirm.ShowDialog();
@@ -258,8 +261,7 @@ namespace mpad
 
         private async void AutoSaveFunc()
         {
-            int totalTimer;
-            totalTimer = 0;
+            int totalTimer = 0;
             const int intervalTimer = 30000;
 
             CancellationTokenSource ct = new CancellationTokenSource();
@@ -289,7 +291,7 @@ namespace mpad
                 {
                     try
                     {
-                        using (StreamWriter sw = new StreamWriter(Data.path)) sw.Write(txtMain.Text);
+                        using (StreamWriter sw = new StreamWriter(Data.path)) await sw.WriteAsync(txtMain.Text);
                         Text = Data.filename + " - " + "mpad";
                         totalTimer = 0;
                         MessageBox.Show("Saved");
@@ -331,6 +333,7 @@ namespace mpad
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void edRedo_Click(object sender, EventArgs e)
         {
+            Application.Exit();
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -415,7 +418,7 @@ namespace mpad
         
         private void viZoomIn_Click(object sender, EventArgs e)
         {
-
+            txtMain.Font = new Font(impConfig.font, newZoom+=2);
         }
         
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -424,7 +427,7 @@ namespace mpad
 
         private void viZoomOut_Click(object sender, EventArgs e)
         {
-
+            txtMain.Font = new Font(impConfig.font, newZoom-=2);
         }
         
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -433,7 +436,7 @@ namespace mpad
 
         private void viResZoom_Click(object sender, EventArgs e)
         {
-
+            txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -446,6 +449,7 @@ namespace mpad
                 Directory.CreateDirectory(EmergencyPath);
 
             string filename = Anti_Overwrite();
+            MessageBox.Show(filename);
 
             using (StreamWriter sw = new StreamWriter(filename))
             {
@@ -457,10 +461,12 @@ namespace mpad
         {
             const string extension = ".txt";
             int i = 0;
-            string filename = EmergencyPath + @"\Recovered" + extension;
+            string filename = EmergencyPath + @"\Recovered";
             string newFileName = "";
 
             if (!File.Exists($"{filename}{extension}")) return newFileName = $"{filename}{extension}";
+
+            if (!File.Exists($"{filename} ({i}){extension}")) return newFileName = $"{filename} ({i}){extension}";
 
             loopWhile:
             while (File.Exists($"{filename} ({i}){extension}"))
