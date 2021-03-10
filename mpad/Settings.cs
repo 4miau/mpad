@@ -57,7 +57,7 @@ namespace mpad
 }
 
 /*
- * Serialize Idea:
+  Serialize Idea:
  - Boolean Argument of Default on method SerializeConfig
  - Switch Case if false, get the config of the mpad session and save (usually when exiting)
  - Switch Case if true, serialize the default config for the set config
