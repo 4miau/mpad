@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -18,8 +19,12 @@ namespace mpad
         public static int newReturn;
         public static int currentTimer = 30000; //default
         private static float newZoom = impConfig.fontSize;
-        
+
         public static string Theme = "Light"; //default
+
+        private Stack<string> _undo;
+        private Stack<string> _edit;
+        private string _oldString;
 
         public mpadMain()
         {
@@ -33,15 +38,18 @@ namespace mpad
             set => base.MinimumSize = value;
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Events
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mpadLoad(object sender, EventArgs e)
         {
-            BeginInvoke((MethodInvoker)(() =>
-           {
-               currentTimer = impConfig.saveTimer;
-               txtMain.WordWrap = impConfig.wrap;
-               foWrap.Checked = impConfig.wrap;
-               txtMain.Font = new Font(impConfig.font, impConfig.fontSize );
-           })); //Overwrites default
+            BeginInvoke((MethodInvoker) (() =>
+            {
+                currentTimer = impConfig.saveTimer;
+                txtMain.WordWrap = impConfig.wrap;
+                foWrap.Checked = impConfig.wrap;
+                txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
+            })); //Overwrites default
 
             //Config to retrieve:  font, theme
 
@@ -76,6 +84,7 @@ namespace mpad
                             {
                                 e.Cancel = true;
                             }
+
                             newReturn = 0;
                             break;
                         case 2:
@@ -87,16 +96,17 @@ namespace mpad
                             newReturn = 0;
                             break;
                     }
+
                     break;
                 case CloseReason.WindowsShutDown when Data.path != "":
+                {
+                    using (StreamWriter sw = new StreamWriter(Data.path))
                     {
-                        using (StreamWriter sw = new StreamWriter(Data.path))
-                        {
-                            sw.Write(txtMain.Text);
-                        }
-
-                        break;
+                        sw.Write(txtMain.Text);
                     }
+
+                    break;
+                }
                 default:
                     _ = new Exception();
                     break;
@@ -104,16 +114,18 @@ namespace mpad
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Events (+ KeyDown)
+        /// Textbox Events (+ KeyDown)
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void updateContent(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtMain.Text)) return;
             Data.saved = false;
             Scheduler.Update(txtMain.Text);
-            Text = "* " + Data.path + " - " + "mpad";
+            Text = "* " + Data.filename + " - " + "mpad";
 
-            //Data.filename
+            bool _editType = isDeletion(_oldString);
+            
+            RecordEdit();
         }
 
         private void keyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -136,24 +148,14 @@ namespace mpad
 
         private void newFileFunc()
         {
-            var newConfirm = new Confirmation
-            {
-                StartPosition = FormStartPosition.CenterParent,
-                Type = 1
-            };
-            
-        
-            
+            var newConfirm = new Confirmation {StartPosition = FormStartPosition.CenterParent, Type = 1};
+
             if (!Data.saved)
             {
                 newConfirm.ShowDialog();
-
                 if (newReturn == 1) txtMain.Text = string.Empty;
             }
-            else
-            {
-                txtMain.Text = string.Empty;
-            }
+            else txtMain.Text = string.Empty;
 
             newReturn = 0;
         }
@@ -267,12 +269,12 @@ namespace mpad
             CancellationTokenSource ct = new CancellationTokenSource();
 
 
-        go:
+            go:
             int localTimer = currentTimer;
 
             while (File.Exists(Data.path) && fiAutoSave.Checked)
             {
-            Task1:
+                Task1:
                 await Task.Delay(intervalTimer, ct.Token);
                 await Task.Run(() =>
                 {
@@ -325,7 +327,6 @@ namespace mpad
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void edUndo_Click(object sender, EventArgs e)
         {
-            txtMain.Undo();
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -333,7 +334,6 @@ namespace mpad
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void edRedo_Click(object sender, EventArgs e)
         {
-            Application.Exit();
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,29 +411,26 @@ namespace mpad
         {
             if (txtMain.Text != "") txtMain.SelectAll();
         }
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// ZOOM IN
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
         private void viZoomIn_Click(object sender, EventArgs e)
         {
-            txtMain.Font = new Font(impConfig.font, newZoom+=2);
+            txtMain.Font = new Font(impConfig.font, newZoom += 2);
         }
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// ZOOM OUT
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         private void viZoomOut_Click(object sender, EventArgs e)
         {
-            txtMain.Font = new Font(impConfig.font, newZoom-=2);
+            txtMain.Font = new Font(impConfig.font, newZoom -= 2);
         }
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// RESTORE ZOOM
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         private void viResZoom_Click(object sender, EventArgs e)
         {
             txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
@@ -442,7 +439,6 @@ namespace mpad
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// MISC & EXTRAS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         private void EmergencyRecovery()
         {
             if (!Directory.Exists(EmergencyPath))
@@ -478,6 +474,22 @@ namespace mpad
             if (File.Exists($"{filename} ({i}){extension}")) goto loopWhile;
 
             return newFileName;
+        }
+
+        private bool isDeletion(string lContent)
+        {
+            return txtMain.TextLength < lContent.Length;
+        }
+        
+        private string RecordEdit()
+        {
+            _oldString = txtMain.Text;
+            edUndo.Enabled = true;
+            _oldString = _edit.Peek();
+            _undo.Clear();
+            edRedo.Enabled = false;
+            
+            return _oldString;
         }
     }
 }
