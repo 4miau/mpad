@@ -64,7 +64,7 @@ namespace mpad
         {
             SaveFileDialog sfd = new SaveFileDialog()
             {
-                FileName = "test.txt",
+                FileName = "Untitled.txt",
                 Filter = "Text File (*.txt)|*.txt|All Files (*.)|*.*",
                 DefaultExt = ".txt",
                 Title = "Save Text File",
