@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Bunifu.UI.WinForms;
 using static mpad.Settings;
 using Clipboard = System.Windows.Forms.Clipboard;
 using Size = System.Drawing.Size;
@@ -43,13 +44,25 @@ namespace mpad
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mpadLoad(object sender, EventArgs e)
         {
-            BeginInvoke((MethodInvoker) (() =>
-            {
-                currentTimer = impConfig.saveTimer;
-                txtMain.WordWrap = impConfig.wrap;
-                foWrap.Checked = impConfig.wrap;
-                txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
-            })); //Overwrites default
+            BeginInvoke((MethodInvoker)(() =>
+           {
+               currentTimer = impConfig.saveTimer;
+               txtMain.WordWrap = impConfig.wrap;
+               foWrap.Checked = impConfig.wrap;
+               txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
+
+               switch (impConfig.theme)
+               {
+                   case "Light":
+                       thLight.Checked = true;
+                       setTheme();
+                       break;
+                   case "Dark":
+                       thDark.Checked = true;
+                       setTheme();
+                       break;
+               }
+           })); //Overwrites default
 
             //Config to retrieve:  font, theme
 
@@ -99,14 +112,14 @@ namespace mpad
 
                     break;
                 case CloseReason.WindowsShutDown when Data.path != "":
-                {
-                    using (StreamWriter sw = new StreamWriter(Data.path))
                     {
-                        sw.Write(txtMain.Text);
-                    }
+                        using (StreamWriter sw = new StreamWriter(Data.path))
+                        {
+                            sw.Write(txtMain.Text);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 default:
                     _ = new Exception();
                     break;
@@ -122,10 +135,6 @@ namespace mpad
             Data.saved = false;
             Scheduler.Update(txtMain.Text);
             Text = "* " + Data.filename + " - " + "mpad";
-
-            bool _editType = isDeletion(_oldString);
-            
-            RecordEdit();
         }
 
         private void keyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -148,7 +157,7 @@ namespace mpad
 
         private void newFileFunc()
         {
-            var newConfirm = new Confirmation {StartPosition = FormStartPosition.CenterParent, Type = 1};
+            var newConfirm = new Confirmation { StartPosition = FormStartPosition.CenterParent, Type = 1 };
 
             if (!Data.saved)
             {
@@ -269,12 +278,12 @@ namespace mpad
             CancellationTokenSource ct = new CancellationTokenSource();
 
 
-            go:
+        go:
             int localTimer = currentTimer;
 
             while (File.Exists(Data.path) && fiAutoSave.Checked)
             {
-                Task1:
+            Task1:
                 await Task.Delay(intervalTimer, ct.Token);
                 await Task.Run(() =>
                 {
@@ -413,7 +422,7 @@ namespace mpad
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// ZOOM IN
+        /// ZOOM IN 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void viZoomIn_Click(object sender, EventArgs e)
         {
@@ -434,6 +443,73 @@ namespace mpad
         private void viResZoom_Click(object sender, EventArgs e)
         {
             txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// THEMES <3
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        private void thLight_Click(object sender, EventArgs e)
+        {
+            if (thLight.Checked) return;
+            thLight.Checked = true;
+            thDark.Checked = false;
+            impConfig.theme = "Light";
+            setTheme();
+        }
+
+        private void thDark_Click(object sender, EventArgs e)
+        {
+            if (thDark.Checked) return;
+            thDark.Checked = true;
+            thLight.Checked = false;
+            impConfig.theme = "Dark";
+            setTheme();
+        }
+
+        private void setTheme()
+        {
+            string currentTheme = impConfig.theme;
+            
+            switch (currentTheme)
+            {
+                case "Light":
+                    txtMain.FillColor = Color.White;
+                    foreach (Control c in Controls)
+                    {
+                        switch (c)
+                        {
+                            case BunifuTextBox _:
+                                c.ForeColor = Color.Black; c.BackColor = Color.White;
+                                break;
+                            case Label _:
+                                c.ForeColor = Color.Black;
+                                break;
+                            case Form _:
+                                c.BackColor = Color.White; c.ForeColor = Color.Black;
+                                break;
+                        }
+                    }
+                    break;
+                case "Dark":
+                    txtMain.FillColor = Color.FromArgb(30, 30, 30);
+                    foreach (Control c in Controls)
+                    {
+                        switch (c)
+                        {
+                            case BunifuTextBox _:
+                                c.ForeColor = Color.White; c.BackColor = Color.DarkGray;
+                                break;
+                            case Label _:
+                                c.ForeColor = Color.White;
+                                break;
+                            case Form _:
+                                c.ForeColor = Color.White; c.BackColor = Color.DarkGray;
+                                break;
+                        }
+                    }
+                    break;
+            }
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -474,22 +550,6 @@ namespace mpad
             if (File.Exists($"{filename} ({i}){extension}")) goto loopWhile;
 
             return newFileName;
-        }
-
-        private bool isDeletion(string lContent)
-        {
-            return txtMain.TextLength < lContent.Length;
-        }
-        
-        private string RecordEdit()
-        {
-            _oldString = txtMain.Text;
-            edUndo.Enabled = true;
-            _oldString = _edit.Peek();
-            _undo.Clear();
-            edRedo.Enabled = false;
-            
-            return _oldString;
         }
     }
 }
