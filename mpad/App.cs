@@ -20,8 +20,7 @@ namespace mpad
             {
                 Directory.CreateDirectory(configPath);
 
-                mpadJSON defaultConfig = new mpadJSON
-                    {id = 1, theme = "Light", wrap = true, font = "Segoe UI", saveTimer = 30000, fontSize = 12f};
+                mpadJSON defaultConfig = new mpadJSON { id = 1, theme = "Light", wrap = true, font = "Segoe UI", saveTimer = 30000, fontSize = 12f };
                 SerializeConfig(defaultConfig);
             }
 

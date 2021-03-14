@@ -138,6 +138,9 @@
     <Reference Include="Bunifu.UI.WinForms.Deprecated, Version=4.1.1.0, Culture=neutral, PublicKeyToken=e8e24ccd28363fe9, processorArchitecture=MSIL">
       <HintPath>..\packages\Bunifu.UI.WinForms.4.1.1\lib\Bunifu.UI.WinForms.Deprecated.dll</HintPath>
     </Reference>
+    <Reference Include="Guna.UI2, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guna.UI2.WinForms.2.0.1.4\lib\net40\Guna.UI2.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -163,6 +166,9 @@
     <Compile Include="Confirmation.Designer.cs">
       <DependentUpon>Confirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Keydowns.cs" />
+    <Compile Include="FileHandler.cs" />
+    <Compile Include="Save.cs" />
     <Compile Include="Scheduler.cs" />
     <Compile Include="mpad.cs">
       <SubType>Form</SubType>

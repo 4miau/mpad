@@ -4,14 +4,9 @@ using System.Windows.Forms;
 
 /*
 Prop:
-0. opened (bool)
-1. saved (bool)
-2. path (string)
-3. content (string)
-4. filename (string)
-5. textbox (string)
-6. text to find
-7. found instance?
+( 5. textbox (string), 6. text to find)
+
+7. found instance? - ??????? not needed I think
  */
 
 namespace mpad
@@ -35,7 +30,7 @@ namespace mpad
             {
                 Title = "Open Text File",
                 Filter = "Text files|*.txt|All Files (*.)|*.*",
-                InitialDirectory = @"C:\"
+                RestoreDirectory = true
             };
 
             if (ofd.ShowDialog() != DialogResult.OK) return;
@@ -68,7 +63,7 @@ namespace mpad
                 Filter = "Text File (*.txt)|*.txt|All Files (*.)|*.*",
                 DefaultExt = ".txt",
                 Title = "Save Text File",
-                InitialDirectory = @"C:\"
+                RestoreDirectory = true
             };
 
             if (sfd.ShowDialog() != DialogResult.OK) return;
