@@ -121,12 +121,12 @@
     <value>#bunifu-label { padding: 0px; font-family: 'Segoe UI'; font-size: 9pt; width: 100%; height: 100%; font-style: normal; font-weight: normal; text-decoration: none; color: rgb(0, 0, 0); text-align: left; }</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnConfirmTimer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="hslTimer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAMYAAAAhCAYAAACC2tRnAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACBSURBVHhe7dOhAYAwAMCwXbKX4b+dgR9gcP2AiKjqjnnu
-        Nc/7Bj57vWNUgH8zBgRjQDAGBGNAMAYEY0AwBgRjQDAGBGNAMAYEY0AwBgRjQDAGBGNAMAYEY0AwBgRj
-        QDAGBGNAMAYEY0AwBgRjQDAGBGNAMAYEY0AY89hXBfitY18PYBY1nzqWFgoAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAdIAAAAfCAYAAABTYUzoAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB1SURBVHhe7dUhCsAwEETRvf/tEpsLrK/flEBcWlWoeg++
+        HD0BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwFc9a/ScU5IkvVVj3+apZV3PI0mStFpfuW8TAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAADgfxE3aq5dntKFYvoAAAAASUVORK5CYII=
 </value>
   </data>
 </root>
