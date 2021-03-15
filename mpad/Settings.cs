@@ -17,6 +17,7 @@ namespace mpad
         }
 
         internal static readonly string configPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\mpad";
+        internal static readonly string fontSizePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\mpad\fontSizes.txt";
         internal static readonly mpadJSON impConfig = new mpadJSON();
 
 
@@ -33,24 +34,16 @@ namespace mpad
         internal static void DeserializeConfig()
         {
             string jsonObject = "";
-
-            using (StreamReader sr = new StreamReader(configPath + @"\mpad.json"))
-            {
-                jsonObject = sr.ReadToEnd();
-            }
+            using (StreamReader sr = new StreamReader(configPath + @"\mpad.json")) jsonObject = sr.ReadToEnd();
 
             mpadJSON configJson = JsonConvert.DeserializeObject<mpadJSON>(jsonObject);
-
             SetConfiguration(configJson);
         }
 
 
         internal static void SerializeConfig(mpadJSON currentConfig)
         {
-
             string exportString = JsonConvert.SerializeObject(currentConfig);
-
-
             using (StreamWriter sw = new StreamWriter(configPath + @"\mpad.json")) sw.Write(exportString);
         }
     }
