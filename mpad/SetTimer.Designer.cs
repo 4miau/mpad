@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace mpad
 {
     partial class SetTimer
@@ -121,7 +123,7 @@ namespace mpad
             // lblBarTimer
             // 
             this.lblBarTimer.AutoSize = true;
-            this.lblBarTimer.Location = new System.Drawing.Point(207, 104);
+            this.lblBarTimer.Location = new System.Drawing.Point(209, 104);
             this.lblBarTimer.Name = "lblBarTimer";
             this.lblBarTimer.Size = new System.Drawing.Size(64, 13);
             this.lblBarTimer.TabIndex = 5;
@@ -141,7 +143,7 @@ namespace mpad
             this.btnConfirmTimer.ForeColor = System.Drawing.Color.White;
             this.btnConfirmTimer.HoverState.Parent = this.btnConfirmTimer;
             this.btnConfirmTimer.ImageSize = new System.Drawing.Size(0, 0);
-            this.btnConfirmTimer.Location = new System.Drawing.Point(142, 130);
+            this.btnConfirmTimer.Location = new System.Drawing.Point(138, 130);
             this.btnConfirmTimer.Name = "btnConfirmTimer";
             this.btnConfirmTimer.ShadowDecoration.Parent = this.btnConfirmTimer;
             this.btnConfirmTimer.Size = new System.Drawing.Size(198, 33);
@@ -164,6 +166,7 @@ namespace mpad
             this.Name = "SetTimer";
             this.Text = "SetTimer";
             this.Load += new System.EventHandler(this.SetTimer_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SetTimer_keyDown);
             this.ParentChanged += new System.EventHandler(this.SetTimer_ParentChanged);
             this.ResumeLayout(false);
             this.PerformLayout();

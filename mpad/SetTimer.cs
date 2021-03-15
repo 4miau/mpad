@@ -2,7 +2,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static mpad.Keydowns;
 using static mpad.Settings;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace mpad
 {
@@ -27,15 +29,15 @@ namespace mpad
                     break;
                 case 60:
                     hslTimer.Value = 2;
-                    lblBarTimer.Text = "1 minute";
+                    lblBarTimer.Text = " 1 minute";
                     break;
                 case 120:
                     hslTimer.Value = 3;
-                    lblBarTimer.Text = "2 minutes";
+                    lblBarTimer.Text = " 2 minutes";
                     break;
                 case 300:
                     hslTimer.Value = 4;
-                    lblBarTimer.Text = "5 minutes";
+                    lblBarTimer.Text = " 5 minutes";
                     break;
                 case 600:
                     hslTimer.Value = 5;
@@ -60,28 +62,29 @@ namespace mpad
             switch (hslTimer.Value)
             {
                 case 1:
-                    mpadMain.currentTimer = 30000;
+                    impConfig.saveTimer = 30000;
                     break;
                 case 2:
-                    mpadMain.currentTimer = 60000;
+                    impConfig.saveTimer = 60000;
                     break;
                 case 3:
-                    mpadMain.currentTimer = 120000;
+                    impConfig.saveTimer = 120000;
                     break;
                 case 4:
-                    mpadMain.currentTimer = 300000;
+                    impConfig.saveTimer = 300000;
                     break;
                 case 5:
-                    mpadMain.currentTimer = 600000;
+                    impConfig.saveTimer = 600000;
                     break;
                 case 6:
-                    mpadMain.currentTimer = 1800000;
+                    impConfig.saveTimer = 1800000;
                     break;
                 case 7:
-                    mpadMain.currentTimer = 3600000;
+                    impConfig.saveTimer = 3600000;
                     break;
                 default:
-                    MessageBox.Show("You did not pick an option so no changes have been made.", "Nothing selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("You did not pick an option so no changes have been made.", "Nothing selected",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     break;
             }
 
@@ -99,13 +102,13 @@ namespace mpad
                     lblBarTimer.Text = "30 seconds";
                     break;
                 case 2:
-                    lblBarTimer.Text = "1 minute";
+                    lblBarTimer.Text = " 1 minute";
                     break;
                 case 3:
-                    lblBarTimer.Text = "2 minutes";
+                    lblBarTimer.Text = " 2 minutes";
                     break;
                 case 4:
-                    lblBarTimer.Text = "5 minutes";
+                    lblBarTimer.Text = " 5 minutes";
                     break;
                 case 5:
                     lblBarTimer.Text = "10 minutes";
@@ -114,7 +117,7 @@ namespace mpad
                     lblBarTimer.Text = "30 minutes";
                     break;
                 case 7:
-                    lblBarTimer.Text = "1 hour";
+                    lblBarTimer.Text = " 1 hour";
                     break;
             }
         }
@@ -148,6 +151,7 @@ namespace mpad
                                 break;
                         }
                     }
+
                     lblTimerTitle.ForeColor = Color.Black;
                     lblTimerText.ForeColor = Color.Black;
                     lblBarTimer.ForeColor = Color.Black;
@@ -156,7 +160,7 @@ namespace mpad
                 case "Dark":
                     BackColor = Color.FromArgb(30, 30, 30);
 
-                    hslTimer.SliderColor = Color.FromArgb(108, 99, 255);
+                    hslTimer.SliderColor = Color.FromArgb(147, 157, 213);
                     hslTimer.ElapsedColor = Color.FromArgb(108, 99, 255);
                     hslTimer.ThumbColor = Color.FromArgb(108, 99, 255);
 
@@ -181,6 +185,11 @@ namespace mpad
                     btnConfirmTimer.FillColor = Color.FromArgb(108, 99, 255);
                     break;
             }
+        }
+
+        private void SetTimer_keyDown(object sender, KeyEventArgs e)
+        {
+            if (themeSet_keyDown()) Close();
         }
     }
 }
