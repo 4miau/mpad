@@ -15,6 +15,7 @@ namespace mpad
     {
         public static bool opened = false;
         public static bool saved = true;
+        public static bool autoSaveCheck = false;
 
         public static string path = "";
         public static string content = "";
@@ -87,11 +88,6 @@ namespace mpad
                 }
             }
 
-        }
-
-        internal static void Update(string Text)
-        {
-            Data.content = Text;
         }
     }
 }

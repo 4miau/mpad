@@ -302,6 +302,7 @@ namespace mpad
             this.foFont.Name = "foFont";
             this.foFont.Size = new System.Drawing.Size(102, 22);
             this.foFont.Text = "Font";
+            this.foFont.Click += new System.EventHandler(this.foFont_Click);
             // 
             // mnuSelection
             // 
@@ -423,26 +424,27 @@ namespace mpad
             // 
             this.txtMain.AcceptsReturn = true;
             this.txtMain.AcceptsTab = true;
-            this.txtMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMain.Animated = true;
             this.txtMain.AutoScroll = true;
             this.txtMain.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtMain.BorderColor = System.Drawing.Color.DimGray;
             this.txtMain.BorderRadius = 1;
-            this.txtMain.BorderThickness = 0;
             this.txtMain.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMain.CustomizableEdges.BottomLeft = false;
+            this.txtMain.CustomizableEdges.BottomRight = false;
+            this.txtMain.CustomizableEdges.TopLeft = false;
+            this.txtMain.CustomizableEdges.TopRight = false;
             this.txtMain.DefaultText = "";
             this.txtMain.DisabledState.BorderColor = System.Drawing.Color.Transparent;
             this.txtMain.DisabledState.FillColor = System.Drawing.Color.Transparent;
-            this.txtMain.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtMain.DisabledState.ForeColor = System.Drawing.Color.Transparent;
             this.txtMain.DisabledState.Parent = this.txtMain;
-            this.txtMain.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtMain.DisabledState.PlaceholderForeColor = System.Drawing.Color.Transparent;
+            this.txtMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtMain.FocusedState.BorderColor = System.Drawing.Color.DimGray;
             this.txtMain.FocusedState.Parent = this.txtMain;
             this.txtMain.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.txtMain.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.txtMain.ForeColor = System.Drawing.Color.Black;
             this.txtMain.HoverState.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.txtMain.HoverState.Parent = this.txtMain;
             this.txtMain.IconLeftSize = new System.Drawing.Size(0, 0);
@@ -456,9 +458,9 @@ namespace mpad
             this.txtMain.PlaceholderText = "";
             this.txtMain.SelectedText = "";
             this.txtMain.ShadowDecoration.Parent = this.txtMain;
-            this.txtMain.Size = new System.Drawing.Size(800, 432);
+            this.txtMain.Size = new System.Drawing.Size(800, 431);
             this.txtMain.TabIndex = 1;
-            this.txtMain.TextOffset = new System.Drawing.Point(-10, 0);
+            this.txtMain.TextOffset = new System.Drawing.Point(-8, -8);
             this.txtMain.TextChanged += new System.EventHandler(this.updateContent);
             this.txtMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
             // 
