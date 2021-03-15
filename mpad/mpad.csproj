@@ -166,6 +166,18 @@
     <Compile Include="Confirmation.Designer.cs">
       <DependentUpon>Confirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Find.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Find.Designer.cs">
+      <DependentUpon>Find.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fonts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fonts.Designer.cs">
+      <DependentUpon>Fonts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Keydowns.cs" />
     <Compile Include="FileHandler.cs" />
     <Compile Include="Save.cs" />
@@ -185,8 +197,16 @@
       <DependentUpon>SetTimer.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="textBoxControls.cs" />
+    <Compile Include="themeControl.cs" />
     <EmbeddedResource Include="Confirmation.resx">
       <DependentUpon>Confirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Find.resx">
+      <DependentUpon>Find.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fonts.resx">
+      <DependentUpon>Fonts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mpad.resx">
       <DependentUpon>mpad.cs</DependentUpon>
@@ -224,6 +244,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mpad_icon.ico" />
+    <Content Include="Resources\arrow-128.png" />
+    <Content Include="Resources\blue-arrow-128.png" />
+    <Content Include="Resources\mpad_icon.ico" />
+    <Content Include="Resources\Regex.png" />
+    <None Include="Resources\zoom-128.png" />
+    <None Include="Resources\blue-zoom-128.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
