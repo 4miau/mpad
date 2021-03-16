@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Text;
 
 namespace mpad
 {
@@ -34,7 +35,9 @@ namespace mpad
         internal static void DeserializeConfig()
         {
             string jsonObject = "";
-            using (StreamReader sr = new StreamReader(configPath + @"\mpad.json")) jsonObject = sr.ReadToEnd();
+            
+            using (FileStream fs = new FileStream(configPath + @"\mpad.json", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (StreamReader sr = new StreamReader(fs, Encoding.Default)) jsonObject = sr.ReadToEnd();
 
             mpadJSON configJson = JsonConvert.DeserializeObject<mpadJSON>(jsonObject);
             SetConfiguration(configJson);
@@ -44,7 +47,9 @@ namespace mpad
         internal static void SerializeConfig(mpadJSON currentConfig)
         {
             string exportString = JsonConvert.SerializeObject(currentConfig);
-            using (StreamWriter sw = new StreamWriter(configPath + @"\mpad.json")) sw.Write(exportString);
+            
+            using (FileStream fs = new FileStream(configPath + @"\mpad.json", FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+            using (StreamWriter sw = new StreamWriter(fs, Encoding.Default)) sw.Write(exportString);
         }
     }
 }

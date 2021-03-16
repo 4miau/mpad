@@ -22,7 +22,8 @@ namespace mpad
 
             List<float> fontSizes = new List<float>();
 
-            using (StreamReader sr = new StreamReader(fontSizePath))
+            using (FileStream fs = new FileStream(fontSizePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (StreamReader sr = new StreamReader(fs))
             {
                 fontSizes = sr.ReadToEnd().Split(',').Select(float.Parse).ToList();
             }
