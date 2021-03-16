@@ -14,6 +14,7 @@ namespace mpad
                 case "Light":
                     txtMain.FillColor = Color.White;
                     txtMain.ForeColor = Color.Black;
+                    txtMain.DisabledState.ForeColor = Color.Black;
 
                     foreach (Control c in frm.Controls)
                     {
@@ -41,6 +42,7 @@ namespace mpad
                 case "Dark":
                     txtMain.FillColor = Color.FromArgb(30, 30, 30);
                     txtMain.ForeColor = Color.White;
+                    txtMain.DisabledState.ForeColor = Color.White;
 
                     foreach (Control c in frm.Controls)
                     {

@@ -426,6 +426,7 @@ namespace mpad
             this.txtMain.AcceptsTab = true;
             this.txtMain.Animated = true;
             this.txtMain.AutoScroll = true;
+            this.txtMain.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.txtMain.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtMain.BorderColor = System.Drawing.Color.DimGray;
             this.txtMain.BorderRadius = 1;
@@ -445,6 +446,7 @@ namespace mpad
             this.txtMain.FocusedState.Parent = this.txtMain;
             this.txtMain.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtMain.ForeColor = System.Drawing.Color.Black;
+            this.txtMain.HideSelection = false;
             this.txtMain.HoverState.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.txtMain.HoverState.Parent = this.txtMain;
             this.txtMain.IconLeftSize = new System.Drawing.Size(0, 0);
@@ -457,6 +459,7 @@ namespace mpad
             this.txtMain.PasswordChar = '\0';
             this.txtMain.PlaceholderText = "";
             this.txtMain.SelectedText = "";
+            this.txtMain.ShadowDecoration.Color = System.Drawing.Color.Transparent;
             this.txtMain.ShadowDecoration.Parent = this.txtMain;
             this.txtMain.Size = new System.Drawing.Size(800, 431);
             this.txtMain.TabIndex = 1;

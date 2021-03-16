@@ -40,7 +40,7 @@ namespace mpad
         private void mpadLoad(object sender, EventArgs e)
         {
             BeginInvoke((MethodInvoker)(() =>
-           {
+            {
                currentTimer = impConfig.saveTimer;
                txtMain.WordWrap = impConfig.wrap;
                foWrap.Checked = impConfig.wrap;
@@ -56,10 +56,11 @@ namespace mpad
                        thDark.Checked = true;
                        setTheme(txtMain, this);
                        break;
-               }
+               } 
            })); //Overwrites default
 
             TopMost = false;
+
 
             //txtMain.HorizontalScroll.Enabled = false;
             //txtMain.HorizontalScroll.Visible = false;
@@ -154,6 +155,7 @@ namespace mpad
             Data.saved = false;
             Data.content = txtMain.Text;
             Text = "* " + Data.filename + " - " + "mpad";
+            txtMain.Font = new Font(impConfig.font, impConfig.fontSize);
         }
 
         private void keyDown(object sender, KeyEventArgs e)
