@@ -71,13 +71,3 @@ namespace mpad
         }
     }
 }
-
-/*
-                    btnConfirm.Location = new Point(29, 144);
-                    btnConfirm.Size = new Size(130, 23);
-                    btnUnconfirm.Location = new Point(179, 144);
-                    btnUnconfirm.Size = new Size(130, 23);
-
-                    btnCancel.Location = new Point(329, 144);
-                    btnCancel.Size = new Size(130, 23);
- */
